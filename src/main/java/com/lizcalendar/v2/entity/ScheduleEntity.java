@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Getter@Setter
 @Entity
 @Table(name="SCHEDULE")
-public class Schedule extends BaseEntity{
+public class ScheduleEntity extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,6 +26,6 @@ public class Schedule extends BaseEntity{
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private User user;
+    private UserEntity user;
 
 }
