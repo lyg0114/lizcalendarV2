@@ -1,5 +1,6 @@
 package com.lizcalendar.v2.dto;
 
+import com.lizcalendar.v2.entity.metaData.AuthLevel;
 import lombok.*;
 
 @Data
@@ -13,6 +14,7 @@ public class UserDto {
 
     private String nicName;
 
-    private boolean isAdmin;
+    private AuthLevel authLevel;
 
+    private String password;
 }

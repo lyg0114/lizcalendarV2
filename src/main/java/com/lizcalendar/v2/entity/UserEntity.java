@@ -1,6 +1,9 @@
 package com.lizcalendar.v2.entity;
 
 
+import com.lizcalendar.v2.entity.metaData.AuthLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,6 +14,8 @@ import java.util.List;
 
 @Getter@Setter
 @Entity
+@Builder
+@AllArgsConstructor
 @Table(name="USERS")
 public class UserEntity extends BaseEntity {
 
@@ -25,13 +30,17 @@ public class UserEntity extends BaseEntity {
     @Column(name="nic_name", nullable = false, length = 100, unique = true)
     private String nicName;
 
-    @Column(name="password", nullable = false, unique = true)
+    @Column(name="password", nullable = false)
     private String password;
 
-    @Column(name="is_admin")
-    private boolean isAdmin;
+    @Enumerated(EnumType.STRING)
+    @Column(name="auth_level")
+    private AuthLevel authLevel;
 
     @OneToMany(mappedBy = "user")
-    private List<Schedule> scheduleList = new ArrayList<>();
+    private List<ScheduleEntity> scheduleList = new ArrayList<>();
 
+    public UserEntity() {
+
+    }
 }

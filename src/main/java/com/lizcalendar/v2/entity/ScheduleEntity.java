@@ -21,8 +21,11 @@ public class ScheduleEntity extends BaseEntity{
     @Column(name="schedule_type")
     private String scheduleType;
 
-    @Column(name="lesson_time")
-    private LocalDateTime lessonTime;
+    @Column(name="lesson_start_dt")
+    private LocalDateTime lessonStartDt;
+
+    @Column(name="lesson_end_dt")
+    private LocalDateTime lessonEndDt;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
