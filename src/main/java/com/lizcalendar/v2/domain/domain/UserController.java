@@ -1,10 +1,7 @@
-package com.lizcalendar.v2.domain.user;
+package com.lizcalendar.v2.domain.domain;
 
 import com.lizcalendar.v2.dto.UserDto;
-import com.lizcalendar.v2.entity.UserEntity;
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

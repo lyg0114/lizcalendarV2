@@ -1,4 +1,4 @@
-package com.lizcalendar.v2.domain.user;
+package com.lizcalendar.v2.domain.domain;
 
 import com.lizcalendar.v2.dto.UserDto;
 
