@@ -1,4 +1,4 @@
-package com.lizcalendar.v2.domain.domain;
+package com.lizcalendar.v2.domain.user;
 
 import com.lizcalendar.v2.dto.UserDto;
 import org.modelmapper.ModelMapper;

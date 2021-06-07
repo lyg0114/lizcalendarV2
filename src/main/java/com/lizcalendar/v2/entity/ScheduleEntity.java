@@ -1,16 +1,18 @@
 package com.lizcalendar.v2.entity;
 
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 
-@Getter@Setter
+@Getter
 @Entity
+@Builder
+@AllArgsConstructor
 @Table(name="SCHEDULE")
+@ToString
 public class ScheduleEntity extends BaseEntity{
 
     @Id
@@ -27,8 +29,15 @@ public class ScheduleEntity extends BaseEntity{
     @Column(name="lesson_end_dt")
     private LocalDateTime lessonEndDt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
+    public ScheduleEntity() {
+    }
+
+    public void setUser(UserEntity user){
+        this.user = user;
+        user.getScheduleList().add(this);
+    }
 }

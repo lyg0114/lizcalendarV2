@@ -1,7 +1,5 @@
 package com.lizcalendar.v2.entity;
 
-
-import com.lizcalendar.v2.entity.metaData.AuthLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@Getter@Setter
+@Getter
 @Entity
 @Builder
 @AllArgsConstructor
@@ -33,14 +31,10 @@ public class UserEntity extends BaseEntity {
     @Column(name="password", nullable = false)
     private String password;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name="auth_level")
-    private AuthLevel authLevel;
-
     @OneToMany(mappedBy = "user")
     private List<ScheduleEntity> scheduleList = new ArrayList<>();
 
     public UserEntity() {
-
     }
+
 }
