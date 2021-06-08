@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@Getter
+@Getter@Setter
 @Entity
 @Builder
 @AllArgsConstructor
@@ -31,7 +31,7 @@ public class UserEntity extends BaseEntity {
     @Column(name="password", nullable = false)
     private String password;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<ScheduleEntity> scheduleList = new ArrayList<>();
 
     public UserEntity() {

@@ -9,8 +9,12 @@ spring:
         web-allow-others: true
       path: /h2-console
   datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:testdb
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://lizcalendal-mysql.canpeabsn7mi.ap-northeast-2.rds.amazonaws.com:3306/Ire
+    username: kylelovelizzy
+    password: kylelovelizzy
+#    driver-class-name: org.h2.Driver
+#    url: jdbc:h2:mem:testdb
 
   jpa:
     hibernate:

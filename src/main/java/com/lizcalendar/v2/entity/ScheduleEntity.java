@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @Table(name="SCHEDULE")
-@ToString
 public class ScheduleEntity extends BaseEntity{
 
     @Id

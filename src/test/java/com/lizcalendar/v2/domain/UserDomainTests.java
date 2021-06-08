@@ -17,6 +17,7 @@ public class UserDomainTests {
 
     @Test
     public void 신규회원_등록(){
+
         UserEntity user = new UserEntity().builder()
                 .nicName("yglee")
                 .name("이영교")
@@ -31,6 +32,36 @@ public class UserDomainTests {
 
     }
 
+
+    @Test
+    public void 회원_수정(){
+        String originalNicName = "yglee";
+        String originalName = "이영교";
+        String originalPassword = "1234";
+
+        String changedNicName = "c_yglee";
+        String changedName = "c_이영교";
+        String changedPassword = "c_1234";
+
+        UserEntity user = new UserEntity().builder()
+                .nicName(originalNicName)
+                .name(originalName)
+                .password(originalPassword)
+                .build();
+        UserEntity savedUser = userRepository.save(user);
+
+
+        UserEntity findUser = userRepository.findById(savedUser.getId()).get();
+        findUser.setNicName(changedNicName);
+        findUser.setName(changedName);
+        findUser.setPassword(changedPassword);
+
+        UserEntity updatedUser = userRepository.save(findUser);
+        assertThat(updatedUser.getNicName()).isEqualTo(changedNicName);
+        assertThat(updatedUser.getName()).isEqualTo(changedName);
+        assertThat(updatedUser.getPassword()).isEqualTo(changedPassword);
+
+    }
 
 
 
