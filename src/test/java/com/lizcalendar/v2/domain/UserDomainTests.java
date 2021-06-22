@@ -16,7 +16,7 @@ public class UserDomainTests {
     private UserRepository userRepository;
 
     @Test
-    public void 신규회원_등록(){
+    public void 신규회원을_등록하라(){
 
         UserEntity user = new UserEntity().builder()
                 .nicName("yglee")
@@ -34,7 +34,7 @@ public class UserDomainTests {
 
 
     @Test
-    public void 회원_수정(){
+    public void 회원정보를_수정하라(){
         String originalNicName = "yglee";
         String originalName = "이영교";
         String originalPassword = "1234";

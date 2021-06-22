@@ -9,6 +9,8 @@ import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -25,7 +27,7 @@ public class ScheduleDomainTests {
     private ScheduleRepository scheduleRepository;
 
     @Test
-    public void 신규일정_등록(){
+    public void 신규일정을_등록하라(){
 
         UserEntity userEntity = new UserEntity().builder()
                 .nicName("yglee")
@@ -70,6 +72,53 @@ public class ScheduleDomainTests {
             System.out.println(i.getScheduleType());
             assertThat(i.getUser().getId()).isEqualTo(findUser.getId());
         });
+
+    }
+
+    @Test
+    @Transactional
+    public void 기존일정을_수정하라(){
+        String originalNicName = "yglee";
+        String originalName = "이영교";
+        String originalPassword = "1234";
+        String originalClassName = "LESSON1";
+
+        String changedNicName = "c_yglee";
+        String changedName = "c_이영교";
+        String changedPassword = "c_1234";
+        String changedClassName = "c_LESSON1";
+
+        UserEntity userEntity = new UserEntity().builder()
+                .nicName(originalNicName)
+                .name(originalName)
+                .password(originalPassword)
+                .scheduleList(new ArrayList<>())
+                .build();
+
+        ScheduleEntity schedule = new ScheduleEntity().builder()
+                .lessonStartDt(LocalDateTime.now())
+                .lessonEndDt(LocalDateTime.now().plusMinutes(30))
+                .scheduleType("LESSON1")
+                .build();
+        schedule.setUser(userEntity);
+
+        UserEntity savedUser = userRepository.save(userEntity);
+        scheduleRepository.save(schedule);
+
+
+        UserEntity findUser = userRepository.findByNicName(originalNicName);
+        System.out.println("findUser = " + findUser.getName());
+        System.out.println("findUser.getScheduleList() = " + userRepository.findByNicName(originalNicName).getScheduleList().get(0).getScheduleType());
+
+        ScheduleEntity findSchedule = scheduleRepository.findById(findUser.getScheduleList().get(0).getId()).get();
+        System.out.println("findSchedule = " + findSchedule.getUser().getName());
+
+
+
+    }
+
+    @Test
+    public void 중복시간을_확인하라(){
 
     }
 

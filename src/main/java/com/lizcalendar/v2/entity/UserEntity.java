@@ -31,7 +31,7 @@ public class UserEntity extends BaseEntity {
     @Column(name="password", nullable = false)
     private String password;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<ScheduleEntity> scheduleList = new ArrayList<>();
 
     public UserEntity() {
