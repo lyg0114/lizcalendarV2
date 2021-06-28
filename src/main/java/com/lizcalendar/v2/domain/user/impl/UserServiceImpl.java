@@ -9,6 +9,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -19,6 +22,14 @@ public class UserServiceImpl implements UserService {
     public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
+    }
+
+    @Override
+    public List<UserDto> findUsers(UserDto userDto) {
+
+        return userRepository.findAllByNicNameAndNameOrderByNameAsc(userDto.getNicName(), userDto.getName())
+                .stream().map(userEntity -> modelMapper.map(userEntity, userDto.getClass()))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -38,5 +49,10 @@ public class UserServiceImpl implements UserService {
         beforeUserEntity.setNicName(userDto.getNicName());
         UserEntity afterUserEntity = userRepository.save(beforeUserEntity);
         return modelMapper.map(afterUserEntity, userDto.getClass());
+    }
+
+    @Override
+    public void deleteUser(long userId) {
+        userRepository.deleteById(userId);
     }
 }

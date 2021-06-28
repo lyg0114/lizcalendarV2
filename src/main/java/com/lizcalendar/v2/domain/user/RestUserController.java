@@ -8,6 +8,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/user")
 public class RestUserController {
@@ -21,6 +23,13 @@ public class RestUserController {
         this.userService = userService;
     }
 
+    @PostMapping(value = "list", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public List<UserDto> getUsers(@RequestBody UserDto search){
+        return userService.findUsers(search);
+    }
+
+
     @PostMapping(value = "/add", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public UserDto createUser(@RequestBody UserDto userDto){
@@ -33,6 +42,11 @@ public class RestUserController {
         return userService.updateUser(userId, userDto);
     }
 
+    @DeleteMapping(value = "{userId}/delete", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteUser(@PathVariable long userId){
+        userService.deleteUser(userId);
+    }
 
 
 
