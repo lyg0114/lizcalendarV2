@@ -1,4 +1,4 @@
-package com.lizcalendar.v2.domain.user;
+package com.lizcalendar.v2.domain.user.impl;
 
 import com.lizcalendar.v2.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

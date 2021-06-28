@@ -1,18 +1,17 @@
 package com.lizcalendar.v2.domain;
 
 
-import com.lizcalendar.v2.domain.schedule.ScheduleRepository;
-import com.lizcalendar.v2.domain.user.UserRepository;
+import com.lizcalendar.v2.domain.schedule.impl.ScheduleRepository;
+import com.lizcalendar.v2.domain.user.impl.UserRepository;
 import com.lizcalendar.v2.entity.ScheduleEntity;
 import com.lizcalendar.v2.entity.UserEntity;
-import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import java.time.LocalDate;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;

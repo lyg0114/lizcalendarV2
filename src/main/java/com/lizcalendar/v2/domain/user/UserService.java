@@ -6,4 +6,7 @@ public interface UserService {
 
     UserDto createUser(UserDto userDto);
 
+    UserDto updateUser(long userId, UserDto userDto);
+
+
 }

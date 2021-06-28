@@ -1,7 +1,7 @@
 package com.lizcalendar.v2.domain;
 
 
-import com.lizcalendar.v2.domain.user.UserRepository;
+import com.lizcalendar.v2.domain.user.impl.UserRepository;
 import com.lizcalendar.v2.entity.UserEntity;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

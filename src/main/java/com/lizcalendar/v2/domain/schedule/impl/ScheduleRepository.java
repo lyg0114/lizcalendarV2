@@ -1,4 +1,4 @@
-package com.lizcalendar.v2.domain.schedule;
+package com.lizcalendar.v2.domain.schedule.impl;
 
 import com.lizcalendar.v2.entity.ScheduleEntity;
 import com.lizcalendar.v2.entity.UserEntity;
