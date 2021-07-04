@@ -65,11 +65,11 @@ public class ScheduleDomainTests {
 
         List<ScheduleEntity> saveScheduleList =  scheduleRepository.saveAll(ScheduleList);
 
-        UserEntity findUser = userRepository.findById(savedUser.getId()).get();
+        UserEntity findUser = userRepository.findById(savedUser.getUserId()).get();
 
         findUser.getScheduleList().stream().forEach(i->{
             System.out.println(i.getScheduleType());
-            assertThat(i.getUser().getId()).isEqualTo(findUser.getId());
+            assertThat(i.getUser().getUserId()).isEqualTo(findUser.getUserId());
         });
 
     }
@@ -109,7 +109,7 @@ public class ScheduleDomainTests {
         System.out.println("findUser = " + findUser.getName());
         System.out.println("findUser.getScheduleList() = " + userRepository.findByNicName(originalNicName).getScheduleList().get(0).getScheduleType());
 
-        ScheduleEntity findSchedule = scheduleRepository.findById(findUser.getScheduleList().get(0).getId()).get();
+        ScheduleEntity findSchedule = scheduleRepository.findById(findUser.getScheduleList().get(0).getScheduleId()).get();
         System.out.println("findSchedule = " + findSchedule.getUser().getName());
 
 

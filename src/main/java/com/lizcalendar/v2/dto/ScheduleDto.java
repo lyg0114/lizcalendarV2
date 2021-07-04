@@ -12,9 +12,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class ScheduleDto {
 
-    private LocalDateTime lessonStartTime;
-
-    private LocalDateTime lessonEndTime;
+    private long userId;
 
     private String name;
 
@@ -22,4 +20,7 @@ public class ScheduleDto {
 
     private String scheduleType;
 
+    private LocalDateTime lessonStartDt;
+
+    private LocalDateTime lessonEndDt;
 }

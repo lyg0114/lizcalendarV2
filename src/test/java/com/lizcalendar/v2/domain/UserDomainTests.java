@@ -25,9 +25,9 @@ public class UserDomainTests {
                 .build();
 
         UserEntity savedUser = userRepository.save(user);
-        UserEntity findUser = userRepository.findById(savedUser.getId()).get();
+        UserEntity findUser = userRepository.findById(savedUser.getUserId()).get();
 
-        assertThat(findUser.getId()).isEqualTo(user.getId());
+        assertThat(findUser.getUserId()).isEqualTo(user.getUserId());
         assertThat(findUser.getNicName()).isEqualTo(user.getNicName());
 
     }
@@ -51,7 +51,7 @@ public class UserDomainTests {
         UserEntity savedUser = userRepository.save(user);
 
 
-        UserEntity findUser = userRepository.findById(savedUser.getId()).get();
+        UserEntity findUser = userRepository.findById(savedUser.getUserId()).get();
         findUser.setNicName(changedNicName);
         findUser.setName(changedName);
         findUser.setPassword(changedPassword);

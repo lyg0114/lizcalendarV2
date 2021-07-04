@@ -29,7 +29,6 @@ public class RestUserController {
         return userService.findUsers(search);
     }
 
-
     @PostMapping(value = "/add", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public UserDto createUser(@RequestBody UserDto userDto){

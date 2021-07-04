@@ -27,7 +27,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserDto> findUsers(UserDto userDto) {
 
-        return userRepository.findAllByNicNameAndNameOrderByNameAsc(userDto.getNicName(), userDto.getName())
+        return userRepository.findAll()
                 .stream().map(userEntity -> modelMapper.map(userEntity, userDto.getClass()))
                 .collect(Collectors.toList());
     }
@@ -35,7 +35,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto createUser(UserDto userDto) {
         UserEntity userEntity = modelMapper.map(userDto, UserEntity.class);
-        userRepository.save(userEntity);
         return modelMapper.map(userRepository.save(userEntity), UserDto.class);
     }
 
@@ -48,7 +47,7 @@ public class UserServiceImpl implements UserService {
         beforeUserEntity.setName(userDto.getName());
         beforeUserEntity.setNicName(userDto.getNicName());
         UserEntity afterUserEntity = userRepository.save(beforeUserEntity);
-        return modelMapper.map(afterUserEntity, userDto.getClass());
+        return modelMapper.map(afterUserEntity, UserDto.class);
     }
 
     @Override

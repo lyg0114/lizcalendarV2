@@ -17,7 +17,7 @@ public class ScheduleEntity extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="schedule_id")
-    private long id;
+    private long scheduleId;
 
     @Column(name="schedule_type")
     private String scheduleType;
