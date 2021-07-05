@@ -2,15 +2,15 @@ package com.lizcalendar.v2.exception;
 
 import org.springframework.validation.Errors;
 
-public class ScheduleOverlapException extends RuntimeException {
+public class ScheduleTimeLimitException extends RuntimeException {
     private static final long serialVersionUID = 1L;
 
     private final String value;
 
     private Errors errors;
 
-    public ScheduleOverlapException() {
-        this.value = "시간이 중복되었습니다.";
+    public ScheduleTimeLimitException() {
+        this.value = "1시간 이하로 예약 가능 합니다.";
     }
 
     public Errors getErrors(){

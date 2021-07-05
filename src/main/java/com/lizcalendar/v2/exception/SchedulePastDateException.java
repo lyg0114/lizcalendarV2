@@ -2,15 +2,15 @@ package com.lizcalendar.v2.exception;
 
 import org.springframework.validation.Errors;
 
-public class ScheduleOverlapException extends RuntimeException {
+public class SchedulePastDateException extends RuntimeException {
     private static final long serialVersionUID = 1L;
 
     private final String value;
 
     private Errors errors;
 
-    public ScheduleOverlapException() {
-        this.value = "시간이 중복되었습니다.";
+    public SchedulePastDateException() {
+        this.value = "지나간 날짜는 예약할 수 없습니다. ";
     }
 
     public Errors getErrors(){
