@@ -1,13 +1,14 @@
 package com.lizcalendar.v2.entity;
 
 
+import com.lizcalendar.v2.dto.ScheduleDto;
 import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 
-@Getter
+@Getter@Setter
 @Entity
 @Builder
 @AllArgsConstructor
@@ -39,4 +40,16 @@ public class ScheduleEntity extends BaseEntity{
         this.user = user;
         user.getScheduleList().add(this);
     }
+
+    public ScheduleDto convertToDto() {
+       return ScheduleDto.builder()
+               .scheduleType(this.scheduleType)
+               .lessonStartDt(this.lessonStartDt)
+               .lessonEndDt(this.lessonEndDt)
+               .userId(this.user.getUserId())
+               .name(this.user.getName())
+               .nicName(this.user.getNicName())
+               .build();
+    }
+
 }

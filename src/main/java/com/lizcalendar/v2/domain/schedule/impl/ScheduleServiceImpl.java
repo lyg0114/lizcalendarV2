@@ -25,14 +25,21 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public ScheduleDto createSchedule(ScheduleDto scheduleDto) {
 
+        /* 중복 시간 체크 */
         if(scheduleRepository.findByLessonStartDtBetween(scheduleDto.getLessonStartDt(), scheduleDto.getLessonEndDt()) != null){
             throw new ScheduleOverlapException("duplicate Schedule");
         }
+        /* 중복 시간 체크 */
         if(scheduleRepository.findByLessonEndDtBetween(scheduleDto.getLessonStartDt(), scheduleDto.getLessonEndDt()) != null){
             throw new ScheduleOverlapException("duplicate Schedule");
         }
 
         ScheduleEntity scheduleEntity = modelMapper.map(scheduleDto, ScheduleEntity.class);
-        return modelMapper.map(scheduleRepository.save(scheduleEntity),ScheduleDto.class);
+        UserEntity userEntity = modelMapper.map(scheduleDto, UserEntity.class);
+        scheduleEntity.setUser(userEntity);
+
+        ScheduleEntity savedSchedule = scheduleRepository.save(scheduleEntity);
+
+        return savedSchedule.convertToDto();
     }
 }

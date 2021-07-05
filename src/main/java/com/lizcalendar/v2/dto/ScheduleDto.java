@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 @Data
 @ToString
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
 public class ScheduleDto {
 
@@ -23,4 +22,14 @@ public class ScheduleDto {
     private LocalDateTime lessonStartDt;
 
     private LocalDateTime lessonEndDt;
+
+    @Builder
+    public ScheduleDto(long userId, String name, String nicName, String scheduleType, LocalDateTime lessonStartDt, LocalDateTime lessonEndDt) {
+        this.userId = userId;
+        this.name = name;
+        this.nicName = nicName;
+        this.scheduleType = scheduleType;
+        this.lessonStartDt = lessonStartDt;
+        this.lessonEndDt = lessonEndDt;
+    }
 }

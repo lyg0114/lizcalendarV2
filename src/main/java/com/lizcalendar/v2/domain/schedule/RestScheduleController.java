@@ -10,6 +10,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+
 @RestController
 @RequestMapping("/schedule")
 public class RestScheduleController {
@@ -25,15 +27,18 @@ public class RestScheduleController {
 
     @PostMapping(value = "/add", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity createSchedule(@RequestBody ScheduleDto scheduleDto){
-
+        HashMap map = new HashMap();
         try{
+            map.put("data",scheduleService.createSchedule(scheduleDto));
+            map.put("ment","일정이 등록 되었습니다.");
             return ResponseEntity
                     .status(HttpStatus.CREATED)
-                    .body(scheduleService.createSchedule(scheduleDto));
+                    .body(map);
         }catch (ScheduleOverlapException e){
+            map.put("ment","시간이 중복되었습니다.");
             return ResponseEntity
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Duplicate Schedule");
+                    .body(map);
         }
 
 
