@@ -30,56 +30,16 @@ public class RestScheduleController {
         HashMap map = new HashMap();
         try{
             map.put("data",scheduleService.createSchedule(scheduleDto));
-            map.put("status", HttpStatus.CREATED);
+            map.put("status", HttpStatus.CREATED.value());
             map.put("ment","일정이 등록 되었습니다.");
             return ResponseEntity
                     .status(HttpStatus.CREATED)
                     .body(map);
 
         }
-        catch (ScheduleTimeMisMatchException e){
+        catch (ScheduleException e){
             e.printStackTrace();
-            map.put("ment", e.getValue());
-            map.put("status", HttpStatus.INTERNAL_SERVER_ERROR);
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(map);
-
-        } catch (SchedulePastDateException e){
-            e.printStackTrace();
-            map.put("ment",e.getValue());
-            map.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(map);
-
-        } catch (ScheduleOverTimeException e){
-            e.printStackTrace();
-            map.put("ment", e.getValue());
-            map.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(map);
-
-        } catch (ScheduleTimeLimitException e){
-            e.printStackTrace();
-            map.put("ment",e.getValue());
-            map.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(map);
-
-        } catch (ScheduleOverlapException e){
-            e.printStackTrace();
-            map.put("ment", e.getValue());
-            map.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(map);
-        }
-        catch (Exception e){
-            e.printStackTrace();
-            map.put("ment", "오류가 발생하였습니다.");
+            map.put("ment", e.getMessage());
             map.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
             return ResponseEntity
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)
