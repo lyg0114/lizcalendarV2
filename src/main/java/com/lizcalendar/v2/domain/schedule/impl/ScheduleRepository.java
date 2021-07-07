@@ -12,7 +12,16 @@ import java.time.LocalDateTime;
 @Repository
 public interface ScheduleRepository extends JpaRepository<ScheduleEntity, Long> {
 
-        @Query(value = "select count(*) from schedule where lesson_start_dt < :lessonEndDt and lesson_end_dt > :lessonStartDt", nativeQuery=true)
-        int checkSuitableTime(@Param("lessonStartDt") LocalDateTime lessonStartDt, @Param("lessonEndDt") LocalDateTime lessonEndDt);
+//        @Query(value = "select count(*) from schedule where lesson_start_dt < :lessonEndDt and lesson_end_dt > :lessonStartDt", nativeQuery=true)
+//        int checkSuitableTime(@Param("lessonStartDt") LocalDateTime lessonStartDt, @Param("lessonEndDt") LocalDateTime lessonEndDt);
+
+        @Query(value = "select count(m) from ScheduleEntity m where m.lessonStartDt < :lessonEndDt and m.lessonEndDt > :lessonStartDt" )
+        int checkSuitableTimeforCereate(@Param("lessonStartDt") LocalDateTime lessonStartDt, @Param("lessonEndDt") LocalDateTime lessonEndDt);
+
+        @Query(value = "select count(m) from ScheduleEntity m where m.lessonStartDt < :lessonEndDt and m.lessonEndDt > :lessonStartDt and m.scheduleId <> :scheduleId" )
+        int checkSuitableTimeforUpdate(@Param("lessonStartDt") LocalDateTime lessonStartDt,
+                                       @Param("lessonEndDt") LocalDateTime lessonEndDt, @Param("scheduleId") long scheduleId);
+
+
 
 }

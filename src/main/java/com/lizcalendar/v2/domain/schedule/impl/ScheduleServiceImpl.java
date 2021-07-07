@@ -45,6 +45,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public ScheduleDto updateSchedule(long scheduleId, ScheduleDto scheduleDto) {
 
+        scheduleDto.setScheduleId(scheduleId);
         ScheduleConditionCheck(scheduleDto);
 
         ScheduleEntity beforeScheduleEntity = scheduleRepository.findById(scheduleId)
@@ -65,7 +66,15 @@ public class ScheduleServiceImpl implements ScheduleService {
 
         LocalDateTime today = LocalDateTime.now();
         Duration duration = Duration.between(scheduleDto.getLessonStartDt(), scheduleDto.getLessonEndDt());
-        int duplicateCount = scheduleRepository.checkSuitableTime(scheduleDto.getLessonStartDt(), scheduleDto.getLessonEndDt());
+        int duplicateCount;
+        if(scheduleDto.getScheduleId() > 0){
+            duplicateCount = scheduleRepository.checkSuitableTimeforUpdate(scheduleDto.getLessonStartDt(),
+                    scheduleDto.getLessonEndDt(), scheduleDto.getScheduleId());
+        }else{
+            duplicateCount = scheduleRepository.checkSuitableTimeforCereate(scheduleDto.getLessonStartDt(),
+                    scheduleDto.getLessonEndDt());
+        }
+
 
         /*종료일이 시작일보다 앞설수 없음*/
         if(!scheduleDto.getLessonStartDt().isBefore(scheduleDto.getLessonEndDt())){
