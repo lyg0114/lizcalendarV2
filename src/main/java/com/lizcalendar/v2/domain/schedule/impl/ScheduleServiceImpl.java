@@ -1,18 +1,18 @@
 package com.lizcalendar.v2.domain.schedule.impl;
 
 import com.lizcalendar.v2.domain.schedule.ScheduleService;
-import com.lizcalendar.v2.domain.user.impl.UserRepository;
 import com.lizcalendar.v2.dto.ScheduleDto;
 import com.lizcalendar.v2.entity.ScheduleEntity;
 import com.lizcalendar.v2.entity.UserEntity;
-import com.lizcalendar.v2.exception.*;
+import com.lizcalendar.v2.exception.DataNotFoundException;
+import com.lizcalendar.v2.exception.Schedule.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.Period;
 import java.time.temporal.ChronoUnit;
 
 @Service
@@ -28,9 +28,10 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
+    @Transactional
     public ScheduleDto createSchedule(ScheduleDto scheduleDto) {
 
-        addConditionCheck(scheduleDto);
+        ScheduleConditionCheck(scheduleDto);
 
         ScheduleEntity scheduleEntity = modelMapper.map(scheduleDto, ScheduleEntity.class);
         UserEntity userEntity = modelMapper.map(scheduleDto, UserEntity.class);
@@ -41,7 +42,26 @@ public class ScheduleServiceImpl implements ScheduleService {
         return savedSchedule.convertToDto();
     }
 
-    private void addConditionCheck(ScheduleDto scheduleDto) {
+    @Override
+    public ScheduleDto updateSchedule(long scheduleId, ScheduleDto scheduleDto) {
+
+        ScheduleConditionCheck(scheduleDto);
+
+        ScheduleEntity beforeScheduleEntity = scheduleRepository.findById(scheduleId)
+                .orElseThrow(()->new DataNotFoundException());
+
+        beforeScheduleEntity.setLessonStartDt(scheduleDto.getLessonStartDt());
+        beforeScheduleEntity.setLessonEndDt(scheduleDto.getLessonEndDt());
+
+        ScheduleEntity afterScheduleEntity = scheduleRepository.save(beforeScheduleEntity);
+        return afterScheduleEntity.convertToDto();
+    }
+
+    private void ScheduleConditionCheck(ScheduleDto scheduleDto) {
+
+        if(scheduleDto.getLessonStartDt() == null || scheduleDto.getLessonEndDt() == null){
+            throw new ScheduleParamNullException();
+        }
 
         LocalDateTime today = LocalDateTime.now();
         Duration duration = Duration.between(scheduleDto.getLessonStartDt(), scheduleDto.getLessonEndDt());
@@ -71,9 +91,6 @@ public class ScheduleServiceImpl implements ScheduleService {
         if(duplicateCount > 0){
             throw new ScheduleOverlapException();
         }
-
-
-
 
     }
 

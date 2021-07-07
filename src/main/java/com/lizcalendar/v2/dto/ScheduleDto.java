@@ -13,6 +13,8 @@ public class ScheduleDto {
 
     private long userId;
 
+    private long scheduleId;
+
     private String name;
 
     private String nicName;
@@ -24,8 +26,10 @@ public class ScheduleDto {
     private LocalDateTime lessonEndDt;
 
     @Builder
-    public ScheduleDto(long userId, String name, String nicName, String scheduleType, LocalDateTime lessonStartDt, LocalDateTime lessonEndDt) {
+    public ScheduleDto(long userId, long scheduleId, String name, String nicName, String scheduleType,
+                       LocalDateTime lessonStartDt, LocalDateTime lessonEndDt) {
         this.userId = userId;
+        this.scheduleId = scheduleId;
         this.name = name;
         this.nicName = nicName;
         this.scheduleType = scheduleType;

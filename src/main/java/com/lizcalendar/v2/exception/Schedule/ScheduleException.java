@@ -1,4 +1,4 @@
-package com.lizcalendar.v2.exception;
+package com.lizcalendar.v2.exception.Schedule;
 
 import org.springframework.validation.Errors;
 

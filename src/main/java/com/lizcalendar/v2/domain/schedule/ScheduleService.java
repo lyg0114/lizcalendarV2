@@ -6,6 +6,7 @@ public interface ScheduleService {
 
     ScheduleDto createSchedule(ScheduleDto scheduleDto);
 
+    ScheduleDto updateSchedule(long scheduleId, ScheduleDto scheduleDto);
 
 
 }

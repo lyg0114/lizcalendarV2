@@ -1,6 +1,4 @@
-package com.lizcalendar.v2.exception;
-
-import org.springframework.validation.Errors;
+package com.lizcalendar.v2.exception.Schedule;
 
 public class SchedulePastDateException extends ScheduleException {
 

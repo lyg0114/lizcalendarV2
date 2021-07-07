@@ -5,12 +5,12 @@ import org.springframework.validation.Errors;
 public class DataNotFoundException extends RuntimeException {
     private static final long serialVersionUID = 1L;
 
-    private final String value;
+    private String value;
 
     private Errors errors;
 
-    public DataNotFoundException( String value) {
-        this.value = value;
+    public DataNotFoundException() {
+        super("데이터를 찾을 수 없습니다.");
     }
 
     public Errors getErrors(){

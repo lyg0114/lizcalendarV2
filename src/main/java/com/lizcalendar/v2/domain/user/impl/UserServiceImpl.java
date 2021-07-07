@@ -42,10 +42,15 @@ public class UserServiceImpl implements UserService {
     public UserDto updateUser(long userId, UserDto userDto) {
 
         UserEntity beforeUserEntity = userRepository.findById(userId)
-                .orElseThrow(()->new DataNotFoundException(ErrorCode.RESOURCE_NOT_FOUND.getMessage()));
+                .orElseThrow(()->new DataNotFoundException());
 
-        beforeUserEntity.setName(userDto.getName());
-        beforeUserEntity.setNicName(userDto.getNicName());
+        if(userDto.getName() != null){
+            beforeUserEntity.setName(userDto.getName());
+        }
+        if(userDto.getNicName() != null){
+            beforeUserEntity.setNicName(userDto.getNicName());
+        }
+
         UserEntity afterUserEntity = userRepository.save(beforeUserEntity);
         return modelMapper.map(afterUserEntity, UserDto.class);
     }

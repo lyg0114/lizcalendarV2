@@ -1,8 +1,7 @@
 package com.lizcalendar.v2.domain.schedule;
 
-import com.lizcalendar.v2.domain.user.UserService;
 import com.lizcalendar.v2.dto.ScheduleDto;
-import com.lizcalendar.v2.exception.*;
+import com.lizcalendar.v2.exception.Schedule.ScheduleException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,26 +26,52 @@ public class RestScheduleController {
 
     @PostMapping(value = "/add", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity createSchedule(@RequestBody ScheduleDto scheduleDto){
-        HashMap map = new HashMap();
+        HashMap responseMap = new HashMap();
+
         try{
-            map.put("data",scheduleService.createSchedule(scheduleDto));
-            map.put("status", HttpStatus.CREATED.value());
-            map.put("ment","일정이 등록 되었습니다.");
+            responseMap.put("data",scheduleService.createSchedule(scheduleDto));
+            responseMap.put("status", HttpStatus.CREATED.value());
+            responseMap.put("ment","일정이 등록 되었습니다.");
             return ResponseEntity
                     .status(HttpStatus.CREATED)
-                    .body(map);
-
-        }
-        catch (ScheduleException e){
+                    .body(responseMap);
+        } catch (ScheduleException e){
             e.printStackTrace();
-            map.put("ment", e.getMessage());
-            map.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
+            responseMap.put("ment", e.getMessage());
+            responseMap.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
             return ResponseEntity
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(map);
+                    .body(responseMap);
         }
 
-
     }
+
+    @PutMapping(value = "{scheduleId}/update", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity modifySchedule(@PathVariable long scheduleId, @RequestBody ScheduleDto scheduleDto){
+        HashMap responseMap = new HashMap();
+        try{
+            responseMap.put("data",scheduleService.updateSchedule(scheduleId,scheduleDto));
+            responseMap.put("status", HttpStatus.CREATED.value());
+            responseMap.put("ment","일정이 수정 되었습니다.");
+            return ResponseEntity
+                    .status(HttpStatus.CREATED)
+                    .body(responseMap);
+        } catch (ScheduleException e){
+            e.printStackTrace();
+            responseMap.put("ment", e.getMessage());
+            responseMap.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(responseMap);
+        }
+    }
+
+
+
+
+
+
+
+
 
 }

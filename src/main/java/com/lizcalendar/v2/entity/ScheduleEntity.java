@@ -49,6 +49,7 @@ public class ScheduleEntity extends BaseEntity{
                .userId(this.user.getUserId())
                .name(this.user.getName())
                .nicName(this.user.getNicName())
+               .scheduleId(this.scheduleId)
                .build();
     }
 
