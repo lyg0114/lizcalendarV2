@@ -45,7 +45,6 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public ScheduleDto updateSchedule(long scheduleId, ScheduleDto scheduleDto) {
 
-        scheduleDto.setScheduleId(scheduleId);
         ScheduleConditionCheck(scheduleDto);
 
         ScheduleEntity beforeScheduleEntity = scheduleRepository.findById(scheduleId)
@@ -59,22 +58,13 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     private void ScheduleConditionCheck(ScheduleDto scheduleDto) {
+        LocalDateTime today;
+        Duration duration;
+        int duplicateCount;
 
         if(scheduleDto.getLessonStartDt() == null || scheduleDto.getLessonEndDt() == null){
             throw new ScheduleParamNullException();
         }
-
-        LocalDateTime today = LocalDateTime.now();
-        Duration duration = Duration.between(scheduleDto.getLessonStartDt(), scheduleDto.getLessonEndDt());
-        int duplicateCount;
-        if(scheduleDto.getScheduleId() > 0){
-            duplicateCount = scheduleRepository.checkSuitableTimeforUpdate(scheduleDto.getLessonStartDt(),
-                    scheduleDto.getLessonEndDt(), scheduleDto.getScheduleId());
-        }else{
-            duplicateCount = scheduleRepository.checkSuitableTimeforCereate(scheduleDto.getLessonStartDt(),
-                    scheduleDto.getLessonEndDt());
-        }
-
 
         /*종료일이 시작일보다 앞설수 없음*/
         if(!scheduleDto.getLessonStartDt().isBefore(scheduleDto.getLessonEndDt())){
@@ -82,6 +72,7 @@ public class ScheduleServiceImpl implements ScheduleService {
         }
 
         /*지난날은 등록하지 못함 */
+        today = LocalDateTime.now();
         if(today.isAfter(scheduleDto.getLessonStartDt()) || today.isAfter(scheduleDto.getLessonEndDt())){
             throw new SchedulePastDateException();
         }
@@ -92,11 +83,14 @@ public class ScheduleServiceImpl implements ScheduleService {
         }
 
         /*1시간 이하로 예약 가능*/
+        duration = Duration.between(scheduleDto.getLessonStartDt(), scheduleDto.getLessonEndDt());
         if(duration.getSeconds() > 3600){
             throw new ScheduleTimeLimitException();
         }
 
         /* 중복 시간 체크 */
+        duplicateCount = scheduleRepository.checkSuitableTime(scheduleDto.getLessonStartDt(),
+                scheduleDto.getLessonEndDt(), scheduleDto.getScheduleId());
         if(duplicateCount > 0){
             throw new ScheduleOverlapException();
         }
