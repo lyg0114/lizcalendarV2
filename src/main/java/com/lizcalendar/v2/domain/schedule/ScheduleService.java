@@ -11,5 +11,7 @@ public interface ScheduleService {
 
     ScheduleDto updateSchedule(long scheduleId, ScheduleDto scheduleDto);
 
-    //List<ScheduleDto> findSchedules(long userId);
+    //List<ScheduleDto> findUserSchedules(long userId);
+
+    void deleteSchedule(long scheduleId);
 }

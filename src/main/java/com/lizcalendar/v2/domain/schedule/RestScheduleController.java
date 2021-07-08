@@ -66,6 +66,26 @@ public class RestScheduleController {
         }
     }
 
+    @DeleteMapping(value = "{scheduleId}/delete", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity deleteSchedule(@PathVariable long scheduleId){
+        HashMap responseMap = new HashMap();
+        try{
+            scheduleService.deleteSchedule(scheduleId);
+            responseMap.put("status", HttpStatus.NO_CONTENT.value());
+            responseMap.put("ment","일정이 삭제되었습니다.");
+            return ResponseEntity
+                    .status(HttpStatus.NO_CONTENT)
+                    .body(responseMap);
+        } catch (ScheduleException e){
+            e.printStackTrace();
+            responseMap.put("ment", "오류가 발생하였습니다.");
+            responseMap.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(responseMap);
+        }
+    }
+
 
 
 }

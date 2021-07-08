@@ -57,6 +57,11 @@ public class ScheduleServiceImpl implements ScheduleService {
         return afterScheduleEntity.convertToDto();
     }
 
+    @Override
+    public void deleteSchedule(long scheduleId) {
+        scheduleRepository.deleteById(scheduleId);
+    }
+
     private void ScheduleConditionCheck(ScheduleDto scheduleDto) {
         LocalDateTime today;
         Duration duration;
