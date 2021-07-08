@@ -18,4 +18,5 @@ public interface ScheduleRepository extends JpaRepository<ScheduleEntity, Long> 
 
 
 
+
 }

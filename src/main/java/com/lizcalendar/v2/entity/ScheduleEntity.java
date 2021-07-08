@@ -29,7 +29,7 @@ public class ScheduleEntity extends BaseEntity{
     @Column(name="lesson_end_dt")
     private LocalDateTime lessonEndDt;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
@@ -38,7 +38,7 @@ public class ScheduleEntity extends BaseEntity{
 
     public void setUser(UserEntity user){
         this.user = user;
-        user.getScheduleList().add(this);
+        //user.getScheduleList().add(this);
     }
 
     public ScheduleDto convertToDto() {

@@ -1,5 +1,6 @@
 package com.lizcalendar.v2.entity;
 
+import com.lizcalendar.v2.dto.UserDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -35,6 +36,13 @@ public class UserEntity extends BaseEntity {
     private List<ScheduleEntity> scheduleList = new ArrayList<>();
 
     public UserEntity() {
+    }
+
+    public UserDto converToDto(){
+          return UserDto.builder()
+                .name(this.name)
+                .nicName(this.nicName)
+                .build();
     }
 
 }

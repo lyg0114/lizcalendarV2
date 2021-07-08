@@ -1,7 +1,10 @@
 package com.lizcalendar.v2.domain.user.impl;
 
+import com.lizcalendar.v2.domain.schedule.impl.ScheduleRepository;
 import com.lizcalendar.v2.domain.user.UserService;
+import com.lizcalendar.v2.dto.ScheduleDto;
 import com.lizcalendar.v2.dto.UserDto;
+import com.lizcalendar.v2.entity.ScheduleEntity;
 import com.lizcalendar.v2.entity.UserEntity;
 import com.lizcalendar.v2.error.ErrorCode;
 import com.lizcalendar.v2.exception.DataNotFoundException;
@@ -16,13 +19,17 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
+    private ScheduleRepository scheduleRepository;
     private ModelMapper modelMapper;
 
+
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper) {
+    public UserServiceImpl(UserRepository userRepository, ScheduleRepository scheduleRepository, ModelMapper modelMapper) {
         this.userRepository = userRepository;
+        this.scheduleRepository = scheduleRepository;
         this.modelMapper = modelMapper;
     }
+
 
     @Override
     public List<UserDto> findUsers(UserDto userDto) {
@@ -30,6 +37,19 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAll()
                 .stream().map(userEntity -> modelMapper.map(userEntity, userDto.getClass()))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public UserDto findUser(long userId) {
+
+        UserEntity findUserEntity = userRepository.findById(userId).orElseThrow(() -> new DataNotFoundException());
+        UserDto findUserDto = findUserEntity.converToDto();
+
+        List<ScheduleEntity> scheduleEntityList = findUserEntity.getScheduleList();
+        List<ScheduleDto> scheduleDtoList = scheduleEntityList.stream().map(i -> i.convertToDto()).collect(Collectors.toList());
+        findUserDto.setScheduleList(scheduleDtoList);
+
+        return findUserDto;
     }
 
     @Override

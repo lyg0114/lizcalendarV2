@@ -14,4 +14,6 @@ public interface UserService {
 
     List<UserDto> findUsers(UserDto search);
 
+    UserDto findUser(long userId);
+
 }

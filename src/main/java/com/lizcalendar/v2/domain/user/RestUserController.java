@@ -23,6 +23,12 @@ public class RestUserController {
         this.userService = userService;
     }
 
+    @GetMapping(value = "{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public UserDto getUsers(@PathVariable long userId){
+        return userService.findUser(userId);
+    }
+
     @PostMapping(value = "list", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public List<UserDto> getUsers(@RequestBody UserDto search){

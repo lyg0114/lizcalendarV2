@@ -6,7 +6,6 @@ import lombok.*;
 import java.time.LocalDateTime;
 
 @Data
-@ToString
 @Builder
 @NoArgsConstructor
 public class ScheduleDto {
