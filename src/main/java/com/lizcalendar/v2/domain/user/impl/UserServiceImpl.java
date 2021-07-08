@@ -12,6 +12,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -45,7 +46,7 @@ public class UserServiceImpl implements UserService {
         UserEntity findUserEntity = userRepository.findById(userId).orElseThrow(() -> new DataNotFoundException());
         UserDto findUserDto = findUserEntity.converToDto();
 
-        List<ScheduleEntity> scheduleEntityList = findUserEntity.getScheduleList();
+        List<ScheduleEntity> scheduleEntityList = scheduleRepository.findScheduleEntitiesByUserAndLessonStartDtBetween(findUserEntity, LocalDateTime.now().minusDays(1), LocalDateTime.now().plusDays(1));
         List<ScheduleDto> scheduleDtoList = scheduleEntityList.stream().map(i -> i.convertToDto()).collect(Collectors.toList());
         findUserDto.setScheduleList(scheduleDtoList);
 
