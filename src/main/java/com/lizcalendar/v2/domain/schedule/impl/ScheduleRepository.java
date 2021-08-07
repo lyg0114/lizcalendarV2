@@ -18,8 +18,5 @@ public interface ScheduleRepository extends JpaRepository<ScheduleEntity, Long> 
                                        @Param("lessonEndDt") LocalDateTime lessonEndDt, @Param("scheduleId") long scheduleId);
 
 
-//        @Query(value = "select m from ScheduleEntity m where m.user = :user")
-//        List<ScheduleEntity> findAllByUser( @Param("user") UserEntity user);
-
         List<ScheduleEntity> findScheduleEntitiesByUserAndLessonStartDtBetween(UserEntity user, LocalDateTime startDt, LocalDateTime endDt);
 }
